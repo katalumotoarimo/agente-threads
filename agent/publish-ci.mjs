@@ -25,31 +25,31 @@ if (!HF_TOKEN || !THREADS_TOKEN || !THREADS_USER_ID) {
 const hf = new HfInference(HF_TOKEN);
 
 const QUOTES = [
-  "El éxito nace de la disciplina diaria.",
-  "No sueñes tu vida, vive tus sueños.",
-  "Cree en ti, el resto vendrá solo.",
-  "Cada caída es una lección disfrazada.",
-  "La perseverancia vence al talento.",
-  "Tu única competencia es tu versión de ayer.",
-  "El esfuerzo de hoy es el triunfo de mañana.",
-  "Lo imposible solo tarda un poco más.",
-  "Las grandes cosas nacen de pequeños pasos.",
-  "No esperes el momento perfecto, créalo.",
-  "El límite no está afuera, está en tu mente.",
-  "La actitud determina tu altitud.",
-  "Cada día es una nueva oportunidad.",
-  "Tu fuerza no está en caer, sino en levantarte.",
-  "El cambio empieza cuando tú decides.",
-  "La disciplina es el puente entre metas y logros.",
-  "No hay atajo para el éxito, solo trabajo.",
-  "Los sueños no tienen fecha de vencimiento.",
-  "Haz hoy lo que otros no quieren, para tener mañana lo que otros no pueden.",
-  "El verdadero fracaso es no intentarlo.",
-  "La paciencia no es esperar, es mantener la actitud.",
-  "Cada experto fue una vez un principiante.",
-  "No cuentes los días, haz que los días cuenten.",
-  "La distancia entre sueño y realidad se llama acción.",
-  "El dolor es temporal, el orgullo es para siempre.",
+  { quote: "El éxito nace de la disciplina diaria.", reflection: "No se trata de hacer grandes cosas de vez en cuando, sino de hacer las pequeñas cosas todos los días. Eso es lo que realmente construye el éxito." },
+  { quote: "No sueñes tu vida, vive tus sueños.", reflection: "Soñar es el primer paso, pero vivir ese sueño requiere acción. ¿Qué puedes hacer hoy para acercarte un paso más?" },
+  { quote: "Cree en ti, el resto vendrá solo.", reflection: "La confianza en uno mismo es el motor que enciende todo lo demás. Cuando crees que puedes, ya recorriste la mitad del camino." },
+  { quote: "Cada caída es una lección disfrazada.", reflection: "Tropezar no es fracasar. Es la vida enseñándote algo que solo se aprende cayendo. Levántate, sacude el polvo y sigue." },
+  { quote: "La perseverancia vence al talento.", reflection: "El talento te abre puertas, pero la perseverancia es la que te mantiene adentro. No pares." },
+  { quote: "Tu única competencia es tu versión de ayer.", reflection: "No te compares con los demás. Compite con quien fuiste ayer. La única meta real es ser mejor que antes." },
+  { quote: "El esfuerzo de hoy es el triunfo de mañana.", reflection: "Cada hora de trabajo, cada sacrificio, cada noche sin dormir vale la pena. El resultado aún no lo ves, pero está en camino." },
+  { quote: "Lo imposible solo tarda un poco más.", reflection: "Todo lo que hoy parece normal alguna vez fue imposible. Date tiempo." },
+  { quote: "Las grandes cosas nacen de pequeños pasos.", reflection: "Un gran viaje se hace paso a paso. No subestimes el poder de avanzar un poco cada día." },
+  { quote: "No esperes el momento perfecto, créalo.", reflection: "El momento perfecto no existe. Se construye con decisión y acción. Deja de esperar y empieza hoy." },
+  { quote: "El límite no está afuera, está en tu mente.", reflection: "Siempre nos decimos 'no puedo' antes de intentarlo. Pregúntate: ¿es realmente imposible o solo miedo?" },
+  { quote: "La actitud determina tu altitud.", reflection: "No siempre puedes controlar lo que te pasa, pero sí cómo reaccionas. Una buena actitud lo cambia todo." },
+  { quote: "Cada día es una nueva oportunidad.", reflection: "El pasado no se cambia, pero cada amanecer trae una hoja en blanco. Escuchá lo que el día tiene para decirte." },
+  { quote: "Tu fuerza no está en caer, sino en levantarte.", reflection: "No importa cuántas veces caigas. Importa cuántas veces encuentres la fuerza para volver a levantarte." },
+  { quote: "El cambio empieza cuando tú decides.", reflection: "Nadie va a cambiar tu vida por vos. El primer paso, el más difícil, solo lo podés dar vos." },
+  { quote: "La disciplina es el puente entre metas y logros.", reflection: "Las metas son sueños con fecha. La disciplina es el vehículo que te lleva de donde estás a donde querés estar." },
+  { quote: "No hay atajo para el éxito, solo trabajo.", reflection: "Todo camino real hacia el éxito está pavimentado con trabajo constante. No hay fórmulas mágicas, solo constancia." },
+  { quote: "Los sueños no tienen fecha de vencimiento.", reflection: "Nunca es tarde para empezar algo nuevo. Tus sueños siguen ahí, esperando que los retomes." },
+  { quote: "Haz hoy lo que otros no quieren, para tener mañana lo que otros no pueden.", reflection: "El sacrificio de hoy es la libertad de mañana. Mientras otros descansan, vos construís tu futuro." },
+  { quote: "El verdadero fracaso es no intentarlo.", reflection: "No intentar por miedo al fracaso es el único fracaso real. Intentalo. Peor sería preguntarse '¿y si lo hubiera intentado?'" },
+  { quote: "La paciencia no es esperar, es mantener la actitud.", reflection: "Paciencia no es pasividad. Es seguir con fe mientras las cosas toman su tiempo." },
+  { quote: "Cada experto fue una vez un principiante.", reflection: "Nadie nace sabiendo. Detrás de cada experto hay horas de práctica, errores y perseverancia." },
+  { quote: "No cuentes los días, haz que los días cuenten.", reflection: "No se trata de sobrevivir la semana esperando el fin de semana. Se trata de encontrar propósito en cada día." },
+  { quote: "La distancia entre sueño y realidad se llama acción.", reflection: "Pensar no basta. Planear no basta. Solo la acción convierte lo imaginado en real." },
+  { quote: "El dolor es temporal, el orgullo es para siempre.", reflection: "Lo que duele hoy será tu orgullo mañana. Dale la bienvenida al esfuerzo porque te está forjando." },
 ];
 
 const THEMES = [
@@ -126,14 +126,14 @@ async function generateImage(quote) {
   return jpgPath;
 }
 
-async function postToThreads(quote, imagePath) {
+async function postToThreads(text, imagePath) {
   console.log("Subiendo a Cloudinary...");
   const upload = await cloudinary.uploader.upload(imagePath, { resource_type: "image" });
   const imageUrl = upload.secure_url;
   console.log("URL:", imageUrl);
 
   console.log("Creando container en Threads...");
-  const body = new URLSearchParams({ media_type: "IMAGE", image_url: imageUrl, text: quote, access_token: THREADS_TOKEN });
+  const body = new URLSearchParams({ media_type: "IMAGE", image_url: imageUrl, text, access_token: THREADS_TOKEN });
   const r1 = await fetch(`https://graph.threads.net/v1.0/${THREADS_USER_ID}/threads`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -159,9 +159,12 @@ async function postToThreads(quote, imagePath) {
   fs.unlinkSync(imagePath);
 }
 
-const quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-console.log("Frase:", quote);
+const selected = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+const quote = selected.quote;
+const reflection = selected.reflection;
+console.log("Frase en imagen:", quote);
+console.log("Reflexion:", reflection);
 
 const imagePath = await generateImage(quote);
-await postToThreads(quote, imagePath);
+await postToThreads(reflection, imagePath);
 console.log("✅ Listo.");

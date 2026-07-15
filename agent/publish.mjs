@@ -35,7 +35,7 @@ async function uploadImage(imagePath) {
 }
 
 async function createAndPublish(params) {
-  const { quote, imageUrl } = params;
+  const { imageUrl, text } = params;
 
   // Step 1: Create container
   console.log("  Creando container en Threads...");
@@ -44,10 +44,10 @@ async function createAndPublish(params) {
   if (imageUrl) {
     body.append("media_type", "IMAGE");
     body.append("image_url", imageUrl);
-    body.append("text", quote);
+    body.append("text", text);
   } else {
     body.append("media_type", "TEXT");
-    body.append("text", quote);
+    body.append("text", text);
   }
 
   const createRes = await fetch(
@@ -91,7 +91,7 @@ async function createAndPublish(params) {
   return pubData.id;
 }
 
-export default async function postToThreads(quote, imagePath) {
+export default async function postToThreads(text, imagePath) {
   console.log("\n  Publicando en Threads...");
 
   try {
@@ -107,7 +107,7 @@ export default async function postToThreads(quote, imagePath) {
       }
     }
 
-    const postId = await createAndPublish({ quote, imageUrl });
+    const postId = await createAndPublish({ text, imageUrl });
 
     // Log to history
     const postLog = path.join(__dirname, "posts", "log.json");
@@ -116,7 +116,7 @@ export default async function postToThreads(quote, imagePath) {
       : { posts: [] };
     log.posts.push({
       id: postId,
-      quote,
+      text,
       withImage: !!imageUrl,
       publishedAt: new Date().toISOString(),
     });

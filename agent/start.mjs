@@ -18,8 +18,8 @@ async function runCycle() {
   console.log("=".repeat(60));
 
   try {
-    const { quote, imagePath } = await generatePost();
-    const success = await postToThreads(quote, imagePath);
+    const { quote, reflection, imagePath } = await generatePost();
+    const success = await postToThreads(reflection, imagePath);
     if (success) {
       console.log("\n✅ Publicado exitosamente.");
     } else {
