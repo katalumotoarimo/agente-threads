@@ -1,0 +1,30 @@
+{
+  "name": "remotion-mundial",
+  "version": "1.0.0",
+  "description": "World Cup video with Remotion",
+  "scripts": {
+    "start": "remotion studio",
+    "render": "remotion render Mundial out/mundial.mp4",
+    "agent": "node agent/start.mjs"
+  },
+  "dependencies": {
+    "@huggingface/inference": "^4.13.23",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@remotion/bundler": "^4.0.489",
+    "@remotion/cli": "^4.0.489",
+    "@remotion/renderer": "^4.0.489",
+    "@remotion/three": "^4.0.489",
+    "cloudinary": "^2.10.0",
+    "node-cron": "^4.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remotion": "^4.0.0",
+    "sharp": "^0.35.3",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "typescript": "^5.3.0"
+  }
+}
